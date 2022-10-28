@@ -3,20 +3,13 @@ import {
   Body,
   Controller,
   HttpStatus,
-  Logger,
   Post,
-  Query,
-  Req,
   Res,
   UploadedFile,
-  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import {
-  FileFieldsInterceptor,
-  FileInterceptor,
-} from '@nestjs/platform-express';
-import { ApiConsumes, ApiTags } from '@nestjs/swagger';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { InsertFileDto } from './dto/insert.file.dto';
@@ -28,6 +21,11 @@ export class AppController {
 
   @ApiConsumes('multipart/form-data')
   @Post('upload')
+  @ApiResponse({
+    status: HttpStatus.ACCEPTED,
+    description:
+      'You have to click on "Try it out" then "Add string item" add an attachment at the end of the knife "Execute".',
+  })
   @UseInterceptors(FileInterceptor('attachment'))
   async generateFile(
     @UploadedFile() file: any,
