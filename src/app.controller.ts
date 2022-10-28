@@ -14,8 +14,8 @@ import { Response } from 'express';
 import { AppService } from './app.service';
 import { InsertFileDto } from './dto/insert.file.dto';
 
-@ApiTags('App')
-@Controller()
+@ApiTags('add_file_for_testing')
+@Controller('add_file_for_testing')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
