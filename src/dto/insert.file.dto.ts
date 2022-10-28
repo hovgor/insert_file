@@ -1,6 +1,6 @@
-import { ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
 
 export class InsertFileDto {
-  @ApiPropertyOptional({ required: false, format: 'binary' })
+  @ApiProperty({ format: 'binary' })
   attachment?: any[];
 }

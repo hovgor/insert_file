@@ -1,18 +1,24 @@
 import {
+  BadRequestException,
   Body,
   Controller,
-  Get,
   HttpStatus,
+  Logger,
   Post,
   Query,
+  Req,
   Res,
+  UploadedFile,
   UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
-import { FileFieldsInterceptor } from '@nestjs/platform-express';
+import {
+  FileFieldsInterceptor,
+  FileInterceptor,
+} from '@nestjs/platform-express';
 import { ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
-import { AppService, storage1 } from './app.service';
+import { AppService } from './app.service';
 import { InsertFileDto } from './dto/insert.file.dto';
 
 @ApiTags('App')
@@ -21,18 +27,18 @@ export class AppController {
   constructor(private readonly appService: AppService) {}
 
   @ApiConsumes('multipart/form-data')
-  @UseInterceptors(
-    FileFieldsInterceptor([{ name: 'attachment', maxCount: 4 }], storage1),
-  )
-  @Post('/insert_file')
-  async insertFile(
+  @Post('upload')
+  @UseInterceptors(FileInterceptor('attachment'))
+  async generateFile(
+    @UploadedFile() file: any,
     @Res() res: Response,
-    @UploadedFiles() files,
-    @Query() reqQuery,
     @Body() body: InsertFileDto,
   ) {
     try {
-      return res.status(HttpStatus.OK);
+      if (!file.originalname.endsWith('.txt')) {
+        throw new BadRequestException('extension is not continue .txt ');
+      }
+      return res.sendStatus(HttpStatus.ACCEPTED);
     } catch (error) {
       throw error;
     }
