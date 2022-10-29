@@ -4,6 +4,7 @@ import {
   Controller,
   HttpStatus,
   Post,
+  Req,
   Res,
   UploadedFile,
   UseInterceptors,
@@ -31,9 +32,12 @@ export class AppController {
     @UploadedFile() file: any,
     @Res() res: Response,
     @Body() body: InsertFileDto,
+    @Req() req: any,
   ) {
     try {
-      if (!file.originalname.endsWith('.txt')) {
+      const ext = req['headers']['content-type'].endsWith('txt');
+      //  file.originalname.endsWith('.txt');
+      if (!ext) {
         throw new BadRequestException('extension is not continue .txt ');
       }
       return res.sendStatus(HttpStatus.ACCEPTED);
