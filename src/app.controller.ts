@@ -8,10 +8,9 @@ import {
   Req,
   Res,
   UploadedFile,
-  UseInterceptors,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiConsumes, ApiResponse, ApiTags } from '@nestjs/swagger';
+// import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { Response } from 'express';
 import { AppService } from './app.service';
 import { DeviceInfoDto } from './dto/device.info.dto';
